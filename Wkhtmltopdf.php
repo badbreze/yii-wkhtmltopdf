@@ -214,7 +214,7 @@ class Wkhtmltopdf extends WkhtpObject
             if ($embed) {
                 $this->headersEmbed($filename, ob_get_length());
             } else {
-                $this->headersEmbed($filename, ob_get_length());
+                $this->headersTransfer($filename, ob_get_length());
             }
             // flush all output
             ob_end_flush();
