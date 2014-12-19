@@ -1,36 +1,41 @@
 <?php
 
-class WkhtpObject {
-    
+class WkhtpObject
+{
+
+    public $page_cu;
+    public $page_nb;
+
     public function &__get($name)
-	{
+    {
         $class = get_class($this);
         $uname = ucfirst($name);
         if (method_exists($class, $m = 'get' . $uname)) {
             $val = $this->$m();
-			return $val;
+            return $val;
         } elseif (property_exists($class, $name)) {
-			return $this->$name;
+            return $this->$name;
         } else {
             throw new WkhtpException("Cannot read a class '$class' property without name.");
         }
-	}
+    }
 
-	public function __set($name, $value)
-	{
+    public function __set($name, $value)
+    {
         $class = get_class($this);
         $uname = ucfirst($name);
         if (method_exists($class, $m = 'set' . $uname)) {
             $this->$m($value);
         } elseif (property_exists($class, $name)) {
-			$this->$name = $value;
+            $this->$name = $value;
         } else {
             throw new WkhtpException("Cannot read a class '$class' property without name.");
         }
-	}
-    
-    function setVars(array $vars) {
-        
+    }
+
+    function setVars(array $vars)
+    {
+
         foreach ($vars as $key => $value) {
             if (property_exists($this, $key)) {
                 $this->$key = $value;
@@ -38,4 +43,5 @@ class WkhtpObject {
         }
         return $this;
     }
+
 }

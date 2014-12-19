@@ -282,7 +282,13 @@ class Wkhtmltopdf extends WkhtpObject
         if ($this->footer !== NULL) {
             $cmd .= ' ' . $this->footer->buildShellArgs($this);
         }
-        foreach ($this->pages as $page) {
+
+        $pages = count($this->pages);
+
+        foreach ($this->pages as $index => $page) {
+            $page->page_cu = $index + 1;
+            $page->page_nb = $pages;
+
             $cmd .= ' ' . $page->buildShellArgs($this);
         }
 
@@ -313,7 +319,7 @@ class Wkhtmltopdf extends WkhtpObject
                 }
             }
         }
-        
+
         return FALSE;
     }
 
