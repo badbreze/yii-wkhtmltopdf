@@ -35,8 +35,8 @@ class WkhtpPage extends WkhtpObject implements WkhtpDocumentPart
     {
         $file = $this->file;
         if ($file === NULL) {
-            $this->html = str_replace("[[page_cu]]", $this->page_cu, $this->html);
-            $this->html = str_replace("[[page_nb]]", $this->page_nb, $this->html);
+            $this->html = str_replace('[[page_cu]]', $document->getJavascriptPagination('page'), $this->html);
+            $this->html = str_replace('[[page_nb]]', $document->getJavascriptPagination('topage'), $this->html);
             $file = $document->saveTempFile((string) $this->html);
         }
 

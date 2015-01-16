@@ -283,12 +283,7 @@ class Wkhtmltopdf extends WkhtpObject
             $cmd .= ' ' . $this->footer->buildShellArgs($this);
         }
 
-        $pages = count($this->pages);
-
         foreach ($this->pages as $index => $page) {
-            $page->page_cu = $index + 1;
-            $page->page_nb = $pages;
-
             $cmd .= ' ' . $page->buildShellArgs($this);
         }
 
@@ -347,6 +342,29 @@ class Wkhtmltopdf extends WkhtpObject
     public function getPages()
     {
         return $this->pages;
+    }
+
+    public function getJavascriptPagination($replaceValue = "page")
+    {
+        return '
+            <span class="pageMetaPart_' . $replaceValue . '"></span>
+            <script type="text/javascript">
+                var vars={};
+                var x=window.location.search.substring(1).split(\'&\');
+
+                for (var i in x) {
+                    var z=x[i].split(\'=\',2);
+                    vars[z[0]] = unescape(z[1]);
+                }
+
+                var u = "pageMetaPart_' . $replaceValue . '";
+                var y = document.getElementsByClassName(u);
+
+                for (var j=0; j<y.length; ++j) {
+                    y[j].textContent = vars["' . $replaceValue . '"];
+                }
+            </script>
+        ';
     }
 
 }

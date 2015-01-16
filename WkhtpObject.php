@@ -2,10 +2,6 @@
 
 class WkhtpObject
 {
-
-    public $page_cu;
-    public $page_nb;
-
     public function &__get($name)
     {
         $class = get_class($this);
